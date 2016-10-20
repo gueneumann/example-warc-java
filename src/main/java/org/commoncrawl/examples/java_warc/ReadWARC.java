@@ -16,7 +16,7 @@ public class ReadWARC {
     // use a callback class for handling WARC record data:
     IProcessWarcRecord processor = new SampleProcessWarcRecord();
 
-    String inputWarcFile="CC-MAIN-20131204131715-00002-ip-10-33-133-15.ec2.internal.warc.gz";
+    String inputWarcFile="/Volumes/data2/cluebweb09-de/0009-05.warc.gz";
     GZIPInputStream gzInputStream=new GZIPInputStream(new FileInputStream(inputWarcFile));
     DataInputStream inStream=new DataInputStream(gzInputStream);
 

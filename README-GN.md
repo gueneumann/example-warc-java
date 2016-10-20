@@ -14,3 +14,7 @@ I think this is the right tool.
 I forked it: https://github.com/gueneumann/boilerpipe
 
 The API shows exactly, what it should do, so I think this is it.
+
+This shows how to extract text:
+
+	http://www.treselle.com/blog/boilerpipe-web-content-extraction-without-boiler-plates/

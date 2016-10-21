@@ -3,7 +3,6 @@ package test.gn;
 import java.io.BufferedOutputStream;
 import java.io.BufferedWriter;
 import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -11,7 +10,6 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.zip.GZIPInputStream;
-import java.util.zip.GZIPOutputStream;
 
 import org.apache.commons.compress.compressors.CompressorException;
 import org.apache.commons.compress.compressors.CompressorOutputStream;
@@ -65,7 +63,7 @@ public class TestReadTextFromWARC {
 			if ((recordCnt % mod) == 0){
 				System.out.println("WarcRecords processed: " + recordCnt);
 			}
-			outStream.write("%% thisWarcRecord.getHeaderRecordType() = " + thisWarcRecord.getHeaderRecordType() + "\n");
+			// outStream.write("%% thisWarcRecord.getHeaderRecordType() = " + thisWarcRecord.getHeaderRecordType() + "\n");
 			if (thisWarcRecord.getHeaderRecordType().equals("response")) {
 				WarcHTMLResponseRecord htmlRecord=new WarcHTMLResponseRecord(thisWarcRecord);
 				String thisTargetURI=htmlRecord.getTargetURI();

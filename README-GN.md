@@ -20,9 +20,9 @@ I integrated boilerpipe via
 	
 Installed and tested, and works.
 
-## How to combined with commoncrawl ?
+## Extracting text from Warc files ?
 
-First test in test.gn.TestReadTextFromWARC
+### First test in test.gn.TestReadTextFromWARC
 
 - streams a local *.warc.gz file
 
@@ -33,4 +33,17 @@ First test in test.gn.TestReadTextFromWARC
 - and than extracts title and text using test.gn.TextExtractorDemo called via test.gn.MyProcessWarcRecord
 
 - it creates a boilerpipe HMTLDocument and extracts title and text using getTitle() and getText()
+
+- saves extracted text as UTF-8 in bz2 text file
+
+### Next steps
+
+- identifying relevant text
+
+- segmentize text
+
+- identify language specific sentences
+
+- write out sentences into files
+
 

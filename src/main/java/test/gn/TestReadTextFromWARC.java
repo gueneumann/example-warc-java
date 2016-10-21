@@ -71,6 +71,8 @@ public class TestReadTextFromWARC {
 
 				// handle WARC record content:
 				processor.process(thisTargetURI, thisContentUtf8);
+				
+				// TODO: segmentize, extract sentences ...
 				outStream.write(processor.getExtractedText() + "\n");
 			}
 		}

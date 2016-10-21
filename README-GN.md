@@ -36,6 +36,21 @@ Installed and tested, and works.
 
 - saves extracted text as UTF-8 in bz2 text file
 
+### Sentence extraction
+
+- segmentize text
+
+- filter segments
+
+	- contains hmtl
+	
+	- too long
+	
+	- too short
+	
+- details
+	https://github.com/gueneumann/cluewebextractor/blob/master/src/main/scala/edu/knowitall/cluewebextractor/GarbageFilter.scala
+
 ### Next steps
 
 - identifying relevant text

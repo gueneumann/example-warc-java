@@ -9,22 +9,14 @@ I have test files in /Users/gune00/ownCloud/cluebweb09-de/
 
 ## http://boilerpipe-web.appspot.com/
 
-I think this is the right tool.
-
-I forked it: https://github.com/gueneumann/boilerpipe
-
-I integrated poiler pipe via
+I integrated boilerpipe via
 
 	<dependency>
 		<groupId>com.robbypond</groupId>
 		<artifactId>boilerpipe</artifactId>
 		<version>1.2.3</version>
+	</dependency>
 
-The API shows exactly, what it should do, so I think this is it.
-
-This shows how to extract text:
-
-	http://www.treselle.com/blog/boilerpipe-web-content-extraction-without-boiler-plates/
 	
 Installed and tested, and works.
 

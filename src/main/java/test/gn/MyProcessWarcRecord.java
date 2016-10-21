@@ -14,7 +14,7 @@ public class MyProcessWarcRecord implements IProcessWarcRecord {
 	
 	@Override
 	public void process(String url, String content) {
-		// simply extract title from content of url and print both.
+		// simply extract title and text from content of url and print both.
 		try {
 			String title = this.extractor.extractTitle(content);
 			System.out.println("title: " + title + "\n");

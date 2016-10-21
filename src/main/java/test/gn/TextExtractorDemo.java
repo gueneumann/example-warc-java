@@ -37,7 +37,6 @@ public class TextExtractorDemo {
 			logger.severe("Exception thrown during scraping process " + e);
 		}
 		return title;
-
 	}
 	
 	public String extractText(String htmlPageContent) throws SAXException, MalformedURLException, IOException{

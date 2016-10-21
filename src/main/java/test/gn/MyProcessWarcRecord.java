@@ -10,18 +10,32 @@ import org.xml.sax.SAXException;
  * a sample callback class for handling WARC record data by implementing IProcessWarcRecord interface
  */
 public class MyProcessWarcRecord implements IProcessWarcRecord {
-	private TextExtractorDemo extractor = new TextExtractorDemo();
+	private TextExtractor extractor = new TextExtractor();
 	
+	private String url = "";
+	private String extractedText = "";
+	
+	
+	public String getUrl() {
+		return url;
+	}
+	public void setUrl(String url) {
+		this.url = url;
+	}
+	public String getExtractedText() {
+		return extractedText;
+	}
+	public void setExtractedText(String extractedText) {
+		this.extractedText = extractedText;
+	}
+
 	@Override
 	public void process(String url, String content) {
 		// simply extract title and text from content of url and print both.
 		try {
-			String title = this.extractor.extractTitle(content);
-			System.out.println("title: " + title + "\n");
+			this.url = url;
 		    
-		    String text = this.extractor.extractText(content);
-		    System.out.println("text: " + text + "\n");
-		    System.out.println("--------------------------------\n");
+		    this.extractedText = this.extractor.extractText(content);
 		    
 		} catch (SAXException e) {
 			// TODO Auto-generated catch block

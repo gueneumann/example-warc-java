@@ -7,8 +7,10 @@ import java.util.logging.Logger;
 
 import org.xml.sax.SAXException;
 
+import de.l3s.boilerpipe.BoilerpipeExtractor;
 import de.l3s.boilerpipe.BoilerpipeProcessingException;
 import de.l3s.boilerpipe.document.TextDocument;
+import de.l3s.boilerpipe.extractors.CommonExtractors;
 import de.l3s.boilerpipe.sax.BoilerpipeSAXInput;
 import de.l3s.boilerpipe.sax.HTMLDocument;
 import de.l3s.boilerpipe.sax.HTMLFetcher;
@@ -19,9 +21,14 @@ import de.l3s.boilerpipe.sax.HTMLFetcher;
  * http://www.treselle.com/blog/boilerpipe-web-content-extraction-without-boiler-plates/
  * 
  */
-public class TextExtractorDemo {
+public class TextExtractor {
 
 	private static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+
+	final BoilerpipeExtractor extractor = CommonExtractors.ARTICLE_EXTRACTOR;
+	// final BoilerpipeExtractor extractor = CommonExtractors.DEFAULT_EXTRACTOR;
+	// final BoilerpipeExtractor extractor = CommonExtractors.CANOLA_EXTRACTOR;
+	// final BoilerpipeExtractor extractor = CommonExtractors.LARGEST_CONTENT_EXTRACTOR;
 
 	public String extractTitle(String htmlPageContent) throws SAXException, MalformedURLException, IOException{
 		String title = "";
@@ -38,21 +45,22 @@ public class TextExtractorDemo {
 		}
 		return title;
 	}
-	
+
 	public String extractText(String htmlPageContent) throws SAXException, MalformedURLException, IOException{
-		String title = "";
+		String text = "";
 		try {
 			// make a new HTMLDocument form the String htmlPageContent determined via 
 			// edu.cmu.lemurproject.WarcHTMLResponseRecord.WarcHTMLResponseRecord(WarcRecord)
 			final HTMLDocument htmlDoc = new HTMLDocument(htmlPageContent);
 			final TextDocument doc = new BoilerpipeSAXInput(htmlDoc.toInputSource()).getTextDocument();
-			title = doc.getText(false,true);
+
+			text = extractor.getText(doc);
 
 
 		} catch (BoilerpipeProcessingException e) {
 			logger.severe("Exception thrown during scraping process " + e);
 		}
-		return title;
+		return text;
 
 	}
 

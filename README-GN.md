@@ -32,5 +32,5 @@ First test in test.gn.TestReadTextFromWARC
 
 - and than extracts title and text using test.gn.TextExtractorDemo called via test.gn.MyProcessWarcRecord
 
-- it creats a boilerpipe HMTLDocument and extracts title and text using getTitle() and getText()
+- it creates a boilerpipe HMTLDocument and extracts title and text using getTitle() and getText()
 

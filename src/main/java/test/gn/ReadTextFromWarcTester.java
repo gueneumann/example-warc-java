@@ -1,19 +1,14 @@
 package test.gn;
 
-import java.io.BufferedOutputStream;
 import java.io.BufferedWriter;
 import java.io.DataInputStream;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
 import java.util.zip.GZIPInputStream;
 
 import org.apache.commons.compress.compressors.CompressorException;
-import org.apache.commons.compress.compressors.CompressorOutputStream;
-import org.apache.commons.compress.compressors.CompressorStreamFactory;
+
+import com.gn.file.Compressor;
 
 import edu.cmu.lemurproject.WarcRecord;
 import edu.cmu.lemurproject.WarcHTMLResponseRecord;
@@ -22,16 +17,7 @@ import edu.cmu.lemurproject.WarcHTMLResponseRecord;
  * a sample callback class for handling WARC record data by implementing IProcessWarcRecord interface
  * This is basically the same as the one from Mark Watson SampleProcessWarcRecord.java .
  */
-public class TestReadTextFromWARC {
-
-	public static BufferedWriter getBufferedWriterForTextFile(String fileOut) 
-			throws FileNotFoundException, CompressorException, UnsupportedEncodingException {
-		FileOutputStream fout = new FileOutputStream(fileOut);
-		BufferedOutputStream bout = new BufferedOutputStream(fout);
-		CompressorOutputStream out = new CompressorStreamFactory().createCompressorOutputStream("bzip2", bout);
-		BufferedWriter br2 = new BufferedWriter(new OutputStreamWriter(out, "utf-8"));
-		return br2;
-	}
+public class ReadTextFromWarcTester {
 	
 	
 	public static void main(String[] args) throws IOException, CompressorException {
@@ -49,7 +35,7 @@ public class TestReadTextFromWARC {
 		// Specify local .txt.bz2 text output file
 		String outputTextFile = inputWarcFile.split(".warc.gz")[0]+".txt.bz2";
 		
-		BufferedWriter outStream = TestReadTextFromWARC.getBufferedWriterForTextFile(outputTextFile);
+		BufferedWriter outStream = Compressor.getBufferedWriterForTextFile(outputTextFile);
 
 		WarcRecord thisWarcRecord;
 		

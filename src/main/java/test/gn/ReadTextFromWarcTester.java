@@ -9,6 +9,7 @@ import java.util.zip.GZIPInputStream;
 import org.apache.commons.compress.compressors.CompressorException;
 
 import com.gn.file.Compressor;
+import com.gn.text.SimpleSegmentizer;
 
 import edu.cmu.lemurproject.WarcRecord;
 import edu.cmu.lemurproject.WarcHTMLResponseRecord;
@@ -21,6 +22,8 @@ public class ReadTextFromWarcTester {
 	
 	
 	public static void main(String[] args) throws IOException, CompressorException {
+		
+		SimpleSegmentizer segmentizer = new SimpleSegmentizer(false, false);
 
 		int recordCnt = 0;
 		
@@ -59,7 +62,12 @@ public class ReadTextFromWarcTester {
 				processor.process(thisTargetURI, thisContentUtf8);
 				
 				// TODO: segmentize, extract sentences ...
-				outStream.write(processor.getExtractedText() + "\n");
+				String extractedString = processor.getExtractedText();
+//				segmentizer.reset();
+//				segmentizer.scanText(extractedString);
+				
+				outStream.write(extractedString + "\n");
+				
 			}
 		}
 		long time2 = System.currentTimeMillis();

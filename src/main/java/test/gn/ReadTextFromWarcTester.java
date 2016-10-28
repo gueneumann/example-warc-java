@@ -32,7 +32,7 @@ public class ReadTextFromWarcTester {
 		MyProcessWarcRecord processor = new MyProcessWarcRecord();
 
 		// Local warc file
-		String inputWarcFile="/Volumes/data2/cluebweb09-de/0001-78.warc.gz";
+		String inputWarcFile="/Users/gune00/data/cluebweb09-de/0001-78.warc.gz";
 		GZIPInputStream gzInputStream=new GZIPInputStream(new FileInputStream(inputWarcFile));
 		DataInputStream inStream=new DataInputStream(gzInputStream);
 		// Specify local .txt.bz2 text output file
@@ -63,10 +63,14 @@ public class ReadTextFromWarcTester {
 				
 				// TODO: segmentize, extract sentences ...
 				String extractedString = processor.getExtractedText();
-//				segmentizer.reset();
-//				segmentizer.scanText(extractedString);
+				segmentizer.reset();
+				segmentizer.scanText(extractedString);
 				
-				outStream.write(extractedString + "\n");
+				String outputString = segmentizer.sentenceListToString();
+				
+//				String outputString = extractedString.toString();
+				
+				outStream.write(outputString + "\n");
 				
 			}
 		}

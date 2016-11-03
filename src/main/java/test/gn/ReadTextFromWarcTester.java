@@ -33,7 +33,7 @@ public class ReadTextFromWarcTester {
 		MyProcessWarcRecord processor = new MyProcessWarcRecord();
 		WarcRecord thisWarcRecord;
 
-		while ((thisWarcRecord=WarcRecord.readNextWarcRecord(inStream))!=null) {
+		while ((thisWarcRecord = WarcRecord.readNextWarcRecord(inStream))!=null) {
 			recordCnt++;
 
 			if ((recordCnt % mod) == 0){
@@ -84,7 +84,9 @@ public class ReadTextFromWarcTester {
 		System.out.println("To text file:         " + outputTextFile);
 		
 		// Make the streams
-		DataInputStream inStream=new DataInputStream(gzInputStream);
+		// NOTE: cannot use BufferedReader because edu.cmu.lemurproject.WarcRecord needs GZ
+		
+		DataInputStream inStream = new DataInputStream(gzInputStream);
 		BufferedWriter outStream = Compressor.getBufferedWriterForTextFile(outputTextFile);
 
 		long time1 = System.currentTimeMillis();

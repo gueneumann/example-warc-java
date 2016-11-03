@@ -57,16 +57,22 @@ public class GarbageFilter {
 	private Boolean tooLong (String input){
 		return (input.length() > longStringSize);		
 	}
-	
+
+	private boolean startsWithLetterChar(String string){
+		return Character.isLetter(string.charAt(0));
+	}
+
 	public boolean isGarbageString(String sentence){
 		String trimmedSentence = this.removeWhiteSpace(sentence);
 		boolean flag = (
-				this.tooShort(trimmedSentence) ||
-				this.tooLong(trimmedSentence) ||
-				this.containsHtml(trimmedSentence)
+				!this.startsWithLetterChar(trimmedSentence) &&
+				(
+						this.tooShort(trimmedSentence) ||
+						this.tooLong(trimmedSentence) ||
+						this.containsHtml(trimmedSentence)
+						)
 				);
-//		System.err.println(trimmedSentence);
-//		System.err.println(flag);
+
 		return flag;
 	}
 
@@ -79,14 +85,14 @@ public class GarbageFilter {
 		System.err.println(testString.length());
 
 		System.out.println("B:"+filter.removeWhiteSpace(testString)+":E");
-		
+
 		System.out.println(filter.containsHtml(testString));
 
 		System.out.println(filter.tooShort(filter.removeWhiteSpace(testString)));
 
 		System.out.println(filter.tooLong(testString));
-		
+
 		System.out.println(filter.isGarbageString(testString));
-		
+
 	}
 }

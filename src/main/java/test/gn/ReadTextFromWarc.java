@@ -83,7 +83,7 @@ public class ReadTextFromWarc {
 	 * @throws IOException
 	 * @throws CompressorException
 	 */
-	public void extractTextFromWarcTotxtFile(String inputWarcFile, String outputTextFile) throws IOException, CompressorException {
+	public void extractTextFromWarcToTxtFile(String inputWarcFile, String outputTextFile) throws IOException, CompressorException {
 
 		// Local warc file
 		GZIPInputStream gzInputStream=new GZIPInputStream(new FileInputStream(inputWarcFile));
@@ -107,6 +107,6 @@ public class ReadTextFromWarc {
 
 		ReadTextFromWarc extractor = new ReadTextFromWarc();
 
-		extractor.extractTextFromWarcTotxtFile(args[0], args[1]);
+		extractor.extractTextFromWarcToTxtFile(args[0], args[1]);
 	}
 }

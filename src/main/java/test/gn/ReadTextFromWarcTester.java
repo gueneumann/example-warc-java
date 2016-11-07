@@ -139,8 +139,11 @@ public class ReadTextFromWarcTester {
 
 		for (File localWarcFile : listOfFiles){
 			if (localWarcFile.isFile() &&
-					localWarcFile.getName().endsWith(".warc.gz"))
-				extractor.extractTextFromWarc(localWarcFile);
+					localWarcFile.getName().endsWith(".warc.gz")) {
+				String inWarcFile = localWarcFile.getAbsolutePath();
+				String outputTextFile = inWarcFile.split(".warc.gz")[0]+".txt.bz2";
+				extractor.extractTextFromWarcTotxtFile(inWarcFile, outputTextFile);
+			}			
 		}
 	}
 }

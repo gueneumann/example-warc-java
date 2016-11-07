@@ -2,7 +2,6 @@ package test.gn;
 
 import java.io.BufferedWriter;
 import java.io.DataInputStream;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.List;
@@ -20,7 +19,7 @@ import edu.cmu.lemurproject.WarcHTMLResponseRecord;
  * a sample callback class for handling WARC record data by implementing IProcessWarcRecord interface
  * This is basically the same as the one from Mark Watson SampleProcessWarcRecord.java .
  */
-public class ReadTextFromWarcTester {
+public class ReadTextFromWarc {
 	SimpleSegmentizer segmentizer = new SimpleSegmentizer(false, false);
 	GarbageFilter filter = new GarbageFilter();
 
@@ -72,32 +71,6 @@ public class ReadTextFromWarcTester {
 		// done processing all WARC records:
 		processor.done();
 	}
-
-	public void extractTextFromWarc(File inputWarcFile) throws IOException, CompressorException {
-
-		// Local warc file
-		GZIPInputStream gzInputStream=new GZIPInputStream(new FileInputStream(inputWarcFile));
-		// Specify local .txt.bz2 text output file
-		String outputTextFile = inputWarcFile.getAbsolutePath().split(".warc.gz")[0]+".txt.bz2";
-		
-		System.out.println("Processing warc file: " + inputWarcFile);
-		System.out.println("To text file:         " + outputTextFile);
-		
-		// Make the streams
-		// NOTE: cannot use BufferedReader because edu.cmu.lemurproject.WarcRecord needs GZ
-		
-		DataInputStream inStream = new DataInputStream(gzInputStream);
-		BufferedWriter outStream = Compressor.getBufferedWriterForTextFile(outputTextFile);
-
-		long time1 = System.currentTimeMillis();
-
-		// Extract and save the text parts of the Warc file
-		this.extractTextFromWarcStreams(inStream, outStream);
-
-		long time2 = System.currentTimeMillis();
-		System.err.println("System time (msec): " + (time2-time1));
-
-	}
 	
 	/**
 	 * <p> This method processes a compressed Warc file inputWarcFile with usual suffix .warc.gz
@@ -132,15 +105,8 @@ public class ReadTextFromWarcTester {
 
 	public static void main(String[] args) throws IOException, CompressorException {
 
-		ReadTextFromWarcTester extractor = new ReadTextFromWarcTester();
+		ReadTextFromWarc extractor = new ReadTextFromWarc();
 
-		File localWarcDir = new File("/Users/gune00/data/cluebweb09-de/");
-		File[] listOfFiles = localWarcDir.listFiles();
-
-		for (File localWarcFile : listOfFiles){
-			if (localWarcFile.isFile() &&
-					localWarcFile.getName().endsWith(".warc.gz"))
-				extractor.extractTextFromWarc(localWarcFile);
-		}
+		extractor.extractTextFromWarcTotxtFile(args[0], args[1]);
 	}
 }

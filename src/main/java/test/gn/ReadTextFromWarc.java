@@ -23,8 +23,38 @@ public class ReadTextFromWarc {
 	SimpleSegmentizer segmentizer = new SimpleSegmentizer(false, false);
 	GarbageFilter filter = new GarbageFilter();
 	MyProcessWarcRecord processor = new MyProcessWarcRecord();
+	
+	public String extractTextFromWarcRecord(WarcRecord thisWarcRecord){
+		if (thisWarcRecord.getHeaderRecordType().equals("response")) {
+			WarcHTMLResponseRecord htmlRecord=new WarcHTMLResponseRecord(thisWarcRecord);
+			String thisTargetURI=htmlRecord.getTargetURI();
+			String thisContentUtf8 = htmlRecord.getRawRecord().getContentUTF8();
 
-	private void extractTextFromWarcStreams(DataInputStream inStream, BufferedWriter outStream) throws IOException {
+			// handle WARC record content:
+			processor.process(thisTargetURI, thisContentUtf8);
+			String extractedString = processor.getExtractedText();
+
+			// Segmentize: tokenization and sentence boundary recognition using morphix-reader style strategy :-)
+			segmentizer.reset();
+			segmentizer.scanText(extractedString);
+
+			// for each extracted sentence (a token list) apply garbage filter 
+			// and eventually write it to output stream
+			StringBuilder outStream = new StringBuilder();
+			for (List<String> sentence : segmentizer.getSentenceList()){
+				String outputString = segmentizer.tokenListToString(sentence);
+
+				if (!filter.isGarbageString(outputString)){
+					outStream.append(outputString + "\n");
+				}
+			}
+			return outStream.toString();
+		}
+		else
+			return null;
+	}
+
+	public void extractTextFromWarcStreams(DataInputStream inStream, BufferedWriter outStream) throws IOException {
 
 		int recordCnt = 0;
 		int mod = 10000;
@@ -53,39 +83,7 @@ public class ReadTextFromWarc {
 		// done processing all WARC records:
 		processor.done();
 	}
-
-	public String extractTextFromWarcRecord(WarcRecord thisWarcRecord){
-		if (thisWarcRecord.getHeaderRecordType().equals("response")) {
-			WarcHTMLResponseRecord htmlRecord=new WarcHTMLResponseRecord(thisWarcRecord);
-			String thisTargetURI=htmlRecord.getTargetURI();
-			String thisContentUtf8 = htmlRecord.getRawRecord().getContentUTF8();
-
-			// handle WARC record content:
-			processor.process(thisTargetURI, thisContentUtf8);
-			String extractedString = processor.getExtractedText();
-
-			// Segmentize: tokenization and sentence boundary recognition using morphix-reader style strategy :-)
-
-			segmentizer.reset();
-			segmentizer.scanText(extractedString);
-
-			// for each extracted sentence (a token list) apply garbage filter 
-			// and eventually write it to output stream
-			StringBuilder outStream = new StringBuilder();
-			for (List<String> sentence : segmentizer.getSentenceList()){
-				String outputString = segmentizer.tokenListToString(sentence);
-
-				if (!filter.isGarbageString(outputString)){
-					outStream.append(outputString + "\n");
-				}
-			}
-			return outStream.toString();
-		}
-		else
-			return null;
-	}
-
-
+	
 	/**
 	 * <p> This method processes a compressed Warc file inputWarcFile with usual suffix .warc.gz
 	 * <p> extracts text, tokenizes and sentence splits the text

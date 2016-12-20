@@ -65,11 +65,14 @@ public class GarbageFilter {
 	public boolean isGarbageString(String sentence){
 		String trimmedSentence = this.removeWhiteSpace(sentence);
 		boolean flag = (
-				!this.startsWithLetterChar(trimmedSentence) &&
+				trimmedSentence.isEmpty() ||
 				(
-						this.tooShort(trimmedSentence) ||
-						this.tooLong(trimmedSentence) ||
-						this.containsHtml(trimmedSentence)
+						!this.startsWithLetterChar(trimmedSentence) &&
+						(
+								this.tooShort(trimmedSentence) ||
+								this.tooLong(trimmedSentence) ||
+								this.containsHtml(trimmedSentence)
+								)
 						)
 				);
 

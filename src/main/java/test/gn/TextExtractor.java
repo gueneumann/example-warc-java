@@ -63,6 +63,23 @@ public class TextExtractor {
 		return text;
 
 	}
+	
+	
+	public TextDocument createTextDocument(String htmlPageContent) throws SAXException, MalformedURLException, IOException{
+
+		try {
+			// make a new HTMLDocument form the String htmlPageContent determined via 
+			// edu.cmu.lemurproject.WarcHTMLResponseRecord.WarcHTMLResponseRecord(WarcRecord)
+			final HTMLDocument htmlDoc = new HTMLDocument(htmlPageContent);
+			final TextDocument doc = new BoilerpipeSAXInput(htmlDoc.toInputSource()).getTextDocument();
+
+			return doc;
+		} catch (BoilerpipeProcessingException e) {
+			logger.severe("Exception thrown during scraping process " + e);
+		}
+		return null;
+
+	}
 
 	public static void main(String[] args) throws Exception {
 

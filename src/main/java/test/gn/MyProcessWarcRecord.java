@@ -6,6 +6,9 @@ import java.net.MalformedURLException;
 import org.commoncrawl.examples.java_warc.IProcessWarcRecord;
 import org.xml.sax.SAXException;
 
+import de.l3s.boilerpipe.BoilerpipeProcessingException;
+import de.l3s.boilerpipe.document.TextDocument;
+
 /**
  * a sample callback class for handling WARC record data by implementing IProcessWarcRecord interface
  */
@@ -14,7 +17,7 @@ public class MyProcessWarcRecord implements IProcessWarcRecord {
 	
 	private String url = "";
 	private String extractedText = "";
-	
+	private String extractedTitle = "";
 	
 	public String getUrl() {
 		return url;
@@ -28,14 +31,22 @@ public class MyProcessWarcRecord implements IProcessWarcRecord {
 	public void setExtractedText(String extractedText) {
 		this.extractedText = extractedText;
 	}
-
+	public String getExtractedTitle() {
+		return extractedTitle;
+	}
+	public void setExtractedTitle(String extractedTitle) {
+		this.extractedTitle = extractedTitle;
+	}
+	
+	
 	@Override
 	public void process(String url, String content) {
 		// simply extract title and text from content of url and print both.
 		try {
 			this.url = url;
-		    
-		    this.extractedText = this.extractor.extractText(content);
+		    TextDocument doc = this.extractor.createTextDocument(content);
+		    this.extractedText = this.extractor.extractor.getText(doc);
+		    this.extractedTitle = doc.getTitle();
 		    
 		} catch (SAXException e) {
 			// TODO Auto-generated catch block
@@ -44,6 +55,9 @@ public class MyProcessWarcRecord implements IProcessWarcRecord {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (BoilerpipeProcessingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

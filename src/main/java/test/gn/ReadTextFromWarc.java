@@ -104,7 +104,7 @@ public class ReadTextFromWarc {
 		System.out.println("To text file:         " + outputTextFile);
 
 		DataInputStream inStream = new DataInputStream(gzInputStream);
-		BufferedWriter outStream = Compressor.getBufferedWriterForTextFile(outputTextFile);
+		BufferedWriter outStream = Compressor.getBufferedWriterForCompressedTextFile(outputTextFile);
 
 		long time1 = System.currentTimeMillis();
 

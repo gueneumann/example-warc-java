@@ -87,7 +87,7 @@ public class ReadTextFromWarcTester {
 		// NOTE: cannot use BufferedReader because edu.cmu.lemurproject.WarcRecord needs GZ
 		
 		DataInputStream inStream = new DataInputStream(gzInputStream);
-		BufferedWriter outStream = Compressor.getBufferedWriterForTextFile(outputTextFile);
+		BufferedWriter outStream = Compressor.getBufferedWriterForCompressedTextFile(outputTextFile);
 
 		long time1 = System.currentTimeMillis();
 
@@ -119,7 +119,7 @@ public class ReadTextFromWarcTester {
 		System.out.println("To text file:         " + outputTextFile);
 		
 		DataInputStream inStream = new DataInputStream(gzInputStream);
-		BufferedWriter outStream = Compressor.getBufferedWriterForTextFile(outputTextFile);
+		BufferedWriter outStream = Compressor.getBufferedWriterForCompressedTextFile(outputTextFile);
 
 		long time1 = System.currentTimeMillis();
 
